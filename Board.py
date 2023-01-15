@@ -167,6 +167,8 @@ for i in range(8):
     symbol.pop(0)
 symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
+colorselect = input('Select side>>> ')
+
 
 def chess_move(frspos, secpos):
 
@@ -180,8 +182,6 @@ def chess_move(frspos, secpos):
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
 
-        for i in colorBoard:
-            print(" ".join(i))
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
         print('Больной?')
     else:
@@ -196,8 +196,20 @@ def chess_move(frspos, secpos):
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
 
+    outputBoard = []
+    if colorselect == 'Black':
+        for i in range(len(colorBoard) - 1, -1, -1):
+            xuy = []
+            for j in colorBoard[i]:
+                xuy.append(j)
+            outputBoard.append(xuy)
+        for i in outputBoard:
+            i.reverse()
+            print(" ".join(i))
+    else:
         for i in colorBoard:
             print(" ".join(i))
+
 
 
 frspos, secpos = input().split() # формат A2 A4
