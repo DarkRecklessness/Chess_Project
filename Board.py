@@ -199,10 +199,10 @@ def chess_move(frspos, secpos):
     outputBoard = []
     if colorselect == 'Black':
         for i in range(len(colorBoard) - 1, -1, -1):
-            xuy = []
+            mas = []
             for j in colorBoard[i]:
-                xuy.append(j)
-            outputBoard.append(xuy)
+                mas.append(j)
+            outputBoard.append(mas)
         for i in outputBoard:
             i.reverse()
             print(" ".join(i))
