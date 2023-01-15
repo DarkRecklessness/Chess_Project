@@ -131,79 +131,45 @@ WH, BH = Horse(), Horse()
 WP, BP = Pawn(), Pawn()
 WS, BS = Slon(), Slon()
 
+
+board = [
+        #i----------------------------------------------
+    ['BL', BH, BS, 'BQ', 'BK', BS, BH, 'BL'], #j
+    [BP, BP, BP, BP, BP, BP, BP, BP], #|
+    ['..', '..', '..', '..', '..', '..', '..', '..'], #|
+    ['..', '..', '..', '..', '..', '..', '..', '..'], #|
+    ['..', '..', '..', '..', '..', '..', '..', '..'], #|
+    ['..', '..', '..', '..', '..', '..', '..', '..'], #|
+    [WP, WP, WP, WP, WP, WP, WP, WP], #|
+    ['WL', WH, WS, 'WQ', 'WK', WS, WH, 'WL']  #|
+]
+
+colorBoard = [
+    ['BL', 'BH', 'BS', 'BQ', 'BK', 'BS', 'BH', 'BL'],
+    ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+    ['WL', 'WH', 'WS', 'WQ', 'WK', 'WS', 'WH', 'WL']
+]
+
+
 posHori = {}
 posVert = {}
-
-if input('Choose color>>> ') == 'White':
-
-    board = [
-        #i----------------------------------------------
-        ['BL', BH, BS, 'BQ', 'BK', BS, BH, 'BL'], #j
-        [BP, BP, BP, BP, BP, BP, BP, BP], #|
-        ['..', '..', '..', '..', '..', '..', '..', '..'], #|
-        ['..', '..', '..', '..', '..', '..', '..', '..'], #|
-        ['..', '..', '..', '..', '..', '..', '..', '..'], #|
-        ['..', '..', '..', '..', '..', '..', '..', '..'], #|
-        [WP, WP, WP, WP, WP, WP, WP, WP], #|
-        ['WL', WH, WS, 'WQ', 'WK', WS, WH, 'WL']  #|
-    ]
-
-    colorBoard = [
-        ['BL', 'BH', 'BS', 'BQ', 'BK', 'BS', 'BH', 'BL'],
-        ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
-        ['WL', 'WH', 'WS', 'WQ', 'WK', 'WS', 'WH', 'WL']
-    ]
-
-    for i in range(8):
-        count = 1
-        for j in range(7, -1, -1):
-            posHori.setdefault(f'{symbol[0] + str(count)}', i)
-            posVert.setdefault(f'{symbol[0] + str(count)}', j)
-            count += 1
-        symbol.pop(0)
-    symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-
-else:
-
-    board = [
-        # i----------------------------------------------
-        ['WL', WH, WS, 'WK', 'WQ', WS, WH, 'WL'] ,  # j
-        [WP, WP, WP, WP, WP, WP, WP, WP],  # |
-        ['..', '..', '..', '..', '..', '..', '..', '..'],  # |
-        ['..', '..', '..', '..', '..', '..', '..', '..'],  # |
-        ['..', '..', '..', '..', '..', '..', '..', '..'],  # |
-        ['..', '..', '..', '..', '..', '..', '..', '..'],  # |
-        [BP, BP, BP, BP, BP, BP, BP, BP],  # |
-        ['BL', BH, BS, 'BK', 'BQ', BS, BH, 'BL']  # |
-    ]
-
-    colorBoard = [
-        ['WL', 'WH', 'WS', 'WK', 'WQ', 'WS', 'WH', 'WL'],
-        ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
-        ['BL', 'BH', 'BS', 'BK', 'BQ', 'BS', 'BH', 'BL']
-    ]
-
-    for i in range(7, -1, -1):
-        count = 1
-        for j in range(8):
-            posHori.setdefault(f'{symbol[0] + str(count)}', i)
-            posVert.setdefault(f'{symbol[0] + str(count)}', j)
-            count += 1
-        symbol.pop(0)
-    symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+for i in range(8):
+    count = 1
+    for j in range(7, -1, -1):
+        posHori.setdefault(f'{symbol[0] + str(count)}', i)
+        posVert.setdefault(f'{symbol[0] + str(count)}', j)
+        count += 1
+    symbol.pop(0)
+symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
 
 def chess_move(frspos, secpos):
+
     if board[posVert[secpos]][posHori[secpos]] == '..':
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
                                                                                                posHori[secpos]], \
@@ -213,6 +179,7 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
+
         for i in colorBoard:
             print(" ".join(i))
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
@@ -228,6 +195,7 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
+
         for i in colorBoard:
             print(" ".join(i))
 
