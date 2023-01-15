@@ -75,6 +75,16 @@ class Pawn:
             return False
 
 
+
+class Slon:
+
+
+    def check_move(self, start, to):
+        if check_diag(start, to):
+            return True
+        return False
+
+
 def color(x):
     if x[0] == 'W':
         return 'White'
@@ -82,18 +92,54 @@ def color(x):
         return 'Black'
 
 
+def check_diag(start, to):
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) - (int(to[1]) - int(start[1])) and start[1] < to[1]: ## C1 E3: 2 == 4 - (2) напр право-верх
+            for i in range(1, (int(to[1])) - int(start[1])): # range(2, 6) board[5][2]
+                if board[posVert[start] - i][posHori[start] + i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) - (int(start[1]) - int(to[1])) and start[1] > to[1]: ## A3 C1: 0 == 2 - (2) напр право-низ
+            for i in range(1, int(start[1]) - int(to[1])):
+                if board[posVert[start] + i][posHori[start] + i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) + (int(start[1]) - int(to[1])): ## D4 B2: 3 == 1 + (2) напр лево-низ
+            for i in range(1, int(start[1]) - int(to[1])): # i = 1
+                if board[posVert[start] + i][posHori[start] - i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) + (int(to[1]) - int(start[1])): ## C1 A3: 2 == 0 + (2) напр лево-верх
+            for i in range(1, (int(to[1])) - int(start[1])):
+                if board[posVert[start] - i][posHori[start] - i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+    return False
+
 WH, BH = Horse(), Horse()
 WP, BP = Pawn(), Pawn()
+WS, BS = Slon(), Slon()
 board = [
     #i----------------------------------------------
-    ['BL', BH, 'BS', 'BQ', 'BK', 'BS', BH, 'BL'], #j
+    ['BL', BH, BS, 'BQ', 'BK', BS, BH, 'BL'], #j
     [BP, BP, BP, BP, BP, BP, BP, BP], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     [WP, WP, WP, WP, WP, WP, WP, WP], #|
-    ['WL', WH, 'WS', 'WQ', 'WK', 'WS', WH, 'WL']  #|
+    ['WL', WH, WS, 'WQ', 'WK', WS, WH, 'WL']  #|
 ]
 
 colorBoard = [
