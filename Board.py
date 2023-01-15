@@ -37,19 +37,19 @@ class Pawn:
 
         if color(colorBoard[posVert[start]][posHori[start]]) == 'White':
 
-            if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 2 == int(to[1]) and int(start[1]) == 2 and colorBoard[posVert[start] - 2][posHori[start]] == 'N':
+            if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 2 == int(to[1]) and int(start[1]) == 2 and colorBoard[posVert[start] - 2][posHori[start]] == '..':
                 return True
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
-                if colorBoard[posVert[start] - 1][posHori[start]] == 'N':
+                if colorBoard[posVert[start] - 1][posHori[start]] == '..':
                     return True
 
             elif symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
-                if colorBoard[posVert[start] - 1][posHori[start] + 1] != 'N':
+                if colorBoard[posVert[start] - 1][posHori[start] + 1] != '..':
                     return True
 
             elif symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
-                if colorBoard[posVert[start] - 1][posHori[start] - 1] != 'N':
+                if colorBoard[posVert[start] - 1][posHori[start] - 1] != '..':
                     return True
 
             return False
@@ -57,19 +57,19 @@ class Pawn:
 
         if color(colorBoard[posVert[start]][posHori[start]]) == 'Black':
 
-            if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 2 == int(to[1]) and int(start[1]) == 7 and colorBoard[posVert[start] + 2][posHori[start]] == 'N':
+            if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 2 == int(to[1]) and int(start[1]) == 7 and colorBoard[posVert[start] + 2][posHori[start]] == '..':
                 return True
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
-                if colorBoard[posVert[start] + 1][posHori[start]] == 'N':
+                if colorBoard[posVert[start] + 1][posHori[start]] == '..':
                     return True
 
             elif symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
-                if colorBoard[posVert[start] + 1][posHori[start] + 1] != 'N':
+                if colorBoard[posVert[start] + 1][posHori[start] + 1] != '..':
                     return True
 
             elif symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
-                if colorBoard[posVert[start] + 1][posHori[start] - 1] != 'N':
+                if colorBoard[posVert[start] + 1][posHori[start] - 1] != '..':
                     return True
 
             return False
@@ -97,14 +97,14 @@ board = [
 ]
 
 colorBoard = [
-    ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-    ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-    ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
-    ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
-    ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
-    ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
-    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
-    ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']
+    ['BL', 'BH', 'BS', 'BQ', 'BK', 'BS', 'BH', 'BL'],
+    ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['..', '..', '..', '..', '..', '..', '..', '..'],
+    ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+    ['WL', 'WH', 'WS', 'WQ', 'WK', 'WS', 'WH', 'WL']
 ]
 
 park = [
@@ -143,13 +143,13 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
-        for i in board:
-            print(i)
+        for i in colorBoard:
+            print(" ".join(i))
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
         print('Больной?')
     else:
         board[posVert[secpos]][posHori[secpos]] = '..'
-        colorBoard[posVert[secpos]][posHori[secpos]] = 'N'
+        colorBoard[posVert[secpos]][posHori[secpos]] = '..'
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
                                                                                                posHori[secpos]], \
                                                                                            board[posVert[frspos]][
@@ -158,8 +158,8 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
-        for i in board:
-            print(i)
+        for i in colorBoard:
+            print(" ".join(i))
 
 
 frspos, secpos = input().split() # формат A2 A4
