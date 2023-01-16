@@ -85,6 +85,24 @@ class Slon:
         return False
 
 
+class Rock:
+
+
+    def check_move(self, start, to):
+        if check_line(start, to):
+            return True
+        return False
+
+
+class Queen:
+
+
+    def check_move(self, start, to):
+        if check_diag(start, to) or check_line(start, to):
+            return True
+        return False
+
+
 def color(x):
     if x[0] == 'W':
         return 'White'
@@ -127,21 +145,64 @@ def check_diag(start, to):
         pass
     return False
 
+
+def check_line(start, to):
+
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) < int(to[1]):#верх
+            for i in range(1, int(to[1]) - int(start[1])):
+                if board[posVert[start] - i][posHori[start]] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+
+    try:
+        if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) > int(to[1]): #низ
+            for i in range(1, int(start[1]) - int(to[1])):
+                if board[posVert[start] + i][posHori[start]] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+
+    try:
+        if symbol.index(start[0]) < symbol.index(to[0]) and int(start[1]) == int(to[1]): #право
+            for i in range(1, symbol.index(to[0]) - symbol.index(start[0])):
+                if board[posVert[start]][posHori[start] + i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+
+    try:
+        if symbol.index(start[0]) > symbol.index(to[0]) and int(start[1]) == int(to[1]): #лево
+            for i in range(1, symbol.index(start[0]) - symbol.index(to[0])):
+                if board[posVert[start]][posHori[start] - i] != '..':
+                    return False
+            return True
+    except IndexError:
+        pass
+
+    return False
+
 WH, BH = Horse(), Horse()
 WP, BP = Pawn(), Pawn()
 WS, BS = Slon(), Slon()
+WL, BL = Rock(), Rock()
+WQ, BQ = Queen(), Queen()
 
 
 board = [
         #i----------------------------------------------
-    ['BL', BH, BS, 'BQ', 'BK', BS, BH, 'BL'], #j
+    [BL, BH, BS, BQ, 'WK', BS, BH, BL], #j
     [BP, BP, BP, BP, BP, BP, BP, BP], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     [WP, WP, WP, WP, WP, WP, WP, WP], #|
-    ['WL', WH, WS, 'WQ', 'WK', WS, WH, 'WL']  #|
+    [WL, WH, WS, WQ, 'WK', WS, WH, WL]  #|
 ]
 
 colorBoard = [
