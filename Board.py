@@ -103,6 +103,28 @@ class Queen:
         return False
 
 
+class King:
+
+
+    def check_move(self, start, to):
+
+        try:
+            if int(to[1]) - int(start[1]) == 1 and (symbol.index(start[0]) == symbol.index(to[0]) or symbol.index(to[0]) - symbol.index(start[0]) == 1 or symbol.index(start[0]) - symbol.index(to[0]) == 1):
+                return True
+        except IndexError:
+            pass
+        try:
+            if int(to[1]) == int(start[1]) and (symbol.index(to[0]) - symbol.index(start[0]) == 1 or symbol.index(start[0]) - symbol.index(to[0]) == 1):
+                return True
+        except IndexError:
+            pass
+        try:
+            if int(start[1]) - int(to[1]) == 1 and (symbol.index(start[0]) == symbol.index(to[0]) or symbol.index(to[0]) - symbol.index(start[0]) == 1 or symbol.index(start[0]) - symbol.index(to[0]) == 1):
+                return True
+        except IndexError:
+            pass
+        return False
+
 def color(x):
     if x[0] == 'W':
         return 'White'
@@ -191,18 +213,19 @@ WP, BP = Pawn(), Pawn()
 WS, BS = Slon(), Slon()
 WL, BL = Rock(), Rock()
 WQ, BQ = Queen(), Queen()
+WK, BK = King(), King()
 
 
 board = [
         #i----------------------------------------------
-    [BL, BH, BS, BQ, 'WK', BS, BH, BL], #j
+    [BL, BH, BS, BQ, BK, BS, BH, BL], #j
     [BP, BP, BP, BP, BP, BP, BP, BP], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     [WP, WP, WP, WP, WP, WP, WP, WP], #|
-    [WL, WH, WS, WQ, 'WK', WS, WH, WL]  #|
+    [WL, WH, WS, WQ, WK, WS, WH, WL]  #|
 ]
 
 colorBoard = [
@@ -273,7 +296,7 @@ def chess_move(frspos, secpos):
 
 
 
-frspos, secpos = input().split() # формат A2 A4
+frspos, secpos = input().split()# формат A2 A4
 while frspos != 'esc' or secpos != 'esc':
     if board[posVert[frspos]][posHori[frspos]].check_move(frspos, secpos):
         chess_move(frspos, secpos)
