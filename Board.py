@@ -35,27 +35,35 @@ class Pawn:
 
     def check_move(self, start, to):
 
+        global flagp2
+        global flagpvz
+
         if color(colorBoard[posVert[start]][posHori[start]]) == 'White':
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 2 == int(to[1]) and int(start[1]) == 2 and colorBoard[posVert[start] - 2][posHori[start]] == '..':
+                flagp2 = str(to).lower()
+                flagpvz = 0
                 return True
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start]] == '..':
                     if int(to[1]) == 8:
                         Ghost_Pawn('White', start)
+                    flagpvz = 0
                     return True
 
             if symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start] + 1] != '..':
                     if int(to[1]) == 8:
                         Ghost_Pawn('White', start)
+                    flagpvz = 0
                     return True
 
             if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start] - 1] != '..':
                     if int(to[1]) == 8:
                         Ghost_Pawn('White', start)
+                    flagpvz = 0
                     return True
 
             return False
@@ -64,24 +72,29 @@ class Pawn:
         if color(colorBoard[posVert[start]][posHori[start]]) == 'Black':
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 2 == int(to[1]) and int(start[1]) == 7 and colorBoard[posVert[start] + 2][posHori[start]] == '..':
+                flagp2 = str(to).lower()
+                flagpvz = 0
                 return True
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start]] == '..':
                     if int(to[1]) == 1:
                         Ghost_Pawn('Black', start)
+                    flagpvz = 0
                     return True
 
             if symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start] + 1] != '..':
                     if int(to[1]) == 1:
                         Ghost_Pawn('Black', start)
+                    flagpvz = 0
                     return True
 
             if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start] - 1] != '..':
                     if int(to[1]) == 1:
                         Ghost_Pawn('Black', start)
+                    flagpvz = 0
                     return True
 
             return False
@@ -125,22 +138,26 @@ class King:
                 if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
                     board[7][7], board[7][5] = board[7][5], board[7][7]
                     colorBoard[7][7], colorBoard[7][5] = colorBoard[7][5], colorBoard[7][7]
+                    stockfishBoard[7][7], stockfishBoard[7][5] = stockfishBoard[7][5], stockfishBoard[7][7]
                     return True
             if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagWK and flagWL1:
                 if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3]:
                     board[7][0], board[7][3] = board[7][3], board[7][0]
                     colorBoard[7][0], colorBoard[7][3] = colorBoard[7][3], colorBoard[7][0]
+                    stockfishBoard[7][0], stockfishBoard[7][3] = stockfishBoard[7][3], stockfishBoard[7][0]
                     return True
         else:
             if symbol.index(start[0]) + 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL2:
                 if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
                     board[0][7], board[0][5] = board[0][5], board[0][7]
                     colorBoard[0][7], colorBoard[0][5] = colorBoard[0][5], colorBoard[0][7]
+                    stockfishBoard[0][7], stockfishBoard[0][5] = stockfishBoard[0][5], stockfishBoard[0][7]
                     return True
             if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL1:
                 if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3]:
                     board[0][0], board[0][3] = board[0][3], board[0][0]
                     colorBoard[0][0], colorBoard[0][3] = colorBoard[0][3], colorBoard[0][0]
+                    stockfishBoard[0][0], stockfishBoard[0][3] = stockfishBoard[0][3], stockfishBoard[0][0]
                     return True
 
         try:
@@ -174,18 +191,22 @@ def Ghost_Pawn(color, start):
         if figure == 'WQ':
             board[posVert[start]][posHori[start]] = WQ
             colorBoard[posVert[start]][posHori[start]] = 'WQ'
+            stockfishBoard[posVert[start]][posHori[start]] = 'Q'
         if figure == 'WH':
             board[posVert[start]][posHori[start]] = WH
             colorBoard[posVert[start]][posHori[start]] = 'WH'
+            stockfishBoard[posVert[start]][posHori[start]] = 'K'
 
     if color == 'Black':
         figure = input('Select figure: BQ/BH >>> ')
         if figure == 'BQ':
             board[posVert[start]][posHori[start]] = BQ
             colorBoard[posVert[start]][posHori[start]] = 'BQ'
+            stockfishBoard[posVert[start]][posHori[start]] = 'q'
         if figure == 'BH':
             board[posVert[start]][posHori[start]] = BH
             colorBoard[posVert[start]][posHori[start]] = 'BH'
+            stockfishBoard[posVert[start]][posHori[start]] = 'k'
 
 
 def check_diag(start, to):
@@ -265,6 +286,52 @@ def check_line(start, to):
     return False
 
 
+flagK, flagQ, flagk, flagq = True, True, True, True
+flagp2 = '-'
+flagpvz = 0
+
+def fen():
+
+    fen = ''
+
+    for i in stockfishBoard:
+        count = 0
+        for j in i:
+            if j == '.':
+                count += 1
+            elif count != 0:
+                fen += str(count)
+                count = 0
+            if j != '.':
+                fen += j
+        if count != 0:
+            fen += str(count)
+        fen += '/'
+    fen = fen[:-1]
+
+    if count_move % 2 == 1:
+        fen += ' w '
+    else:
+        fen += ' b '
+
+    if flagK == True:
+        fen += 'K'
+    if flagQ == True:
+        fen += 'Q'
+    if flagk == True:
+        fen += 'k'
+    if flagq == True:
+        fen += 'q'
+    fen += ' '
+    fen += flagp2
+    fen += ' '
+    fen += str(flagpvz)
+    fen += ' '
+    fen += str(count_move)
+
+    return fen
+
+
 WH, BH = Horse(), Horse()
 WP, BP = Pawn(), Pawn()
 WS, BS = Slon(), Slon()
@@ -279,7 +346,6 @@ flagBL1 = True
 flagBL2 = True
 flagWK = True
 flagBK = True
-
 
 
 board = [
@@ -306,6 +372,18 @@ colorBoard = [
 ]
 
 
+stockfishBoard = [
+    ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+    ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+    ['.', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '.'],
+    ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+]
+
+
 posHori = {}
 posVert = {}
 for i in range(8):
@@ -322,6 +400,8 @@ colorselect = input('Select side>>> ')
 
 def chess_move(frspos, secpos):
 
+    global flagpvz
+
     if board[posVert[secpos]][posHori[secpos]] == '..':
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
                                                                                                posHori[secpos]], \
@@ -331,12 +411,18 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
+        stockfishBoard[posVert[frspos]][posHori[frspos]], stockfishBoard[posVert[secpos]][posHori[secpos]] = \
+        stockfishBoard[posVert[secpos]][
+            posHori[secpos]], \
+        stockfishBoard[posVert[frspos]][
+            posHori[frspos]]
 
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
         print('Больной?')
     else:
         board[posVert[secpos]][posHori[secpos]] = '..'
         colorBoard[posVert[secpos]][posHori[secpos]] = '..'
+        stockfishBoard[posVert[secpos]][posHori[secpos]] = '.'
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
                                                                                                posHori[secpos]], \
                                                                                            board[posVert[frspos]][
@@ -345,6 +431,13 @@ def chess_move(frspos, secpos):
                                                                                                posHori[secpos]], \
                                                                                            colorBoard[posVert[frspos]][
                                                                                                posHori[frspos]]
+        stockfishBoard[posVert[frspos]][posHori[frspos]], stockfishBoard[posVert[secpos]][posHori[secpos]] = \
+        stockfishBoard[posVert[secpos]][
+            posHori[secpos]], \
+        stockfishBoard[posVert[frspos]][
+            posHori[frspos]]
+
+        flagpvz = 0
 
     outputBoard = []
     if colorselect == 'Black':
@@ -356,22 +449,42 @@ def chess_move(frspos, secpos):
         for i in outputBoard:
             i.reverse()
             print(" ".join(i))
+        print(fen())
     else:
         for i in colorBoard:
             print(" ".join(i))
+        print(fen())
 
 
-
+count_move = 1
+print(fen())
 frspos, secpos = input().split()# формат A2 A4
 while frspos != 'esc' or secpos != 'esc':
     if board[posVert[frspos]][posHori[frspos]].check_move(frspos, secpos):
+        if board[posVert[frspos]][posHori[frspos]] == WK:
+            flagWK = False
+            flagK = False
+            flagQ = False
+        if board[posVert[frspos]][posHori[frspos]] == BK:
+            flagBK = False
+            flagk = False
+            flagq = False
+        if board[posVert[frspos]][posHori[frspos]] == WL1:
+            flagWL1 = False
+            flagQ = False
+        if board[posVert[frspos]][posHori[frspos]] == WL2:
+            flagWL2 = False
+            flagK = False
+        if board[posVert[frspos]][posHori[frspos]] == BL1:
+            flagBL1 = False
+            flagq = False
+        if board[posVert[frspos]][posHori[frspos]] == BL2:
+            flagBL2 = False
+            flagk = False
+        count_move += 1
         chess_move(frspos, secpos)
-        if board[posVert[secpos]][posHori[secpos]] == WK: flagWK = False
-        if board[posVert[secpos]][posHori[secpos]] == BK: flagBK = False
-        if board[posVert[secpos]][posHori[secpos]] == WL1: flagWL1 = False
-        if board[posVert[secpos]][posHori[secpos]] == WL2: flagWL2 = False
-        if board[posVert[secpos]][posHori[secpos]] == BL1: flagBL1 = False
-        if board[posVert[secpos]][posHori[secpos]] == BL2: flagBL2 = False
+        flagpvz += 1
+        flagp2 = '-'
     else:
         print('incorrect path')
     frspos, secpos = input().split()
