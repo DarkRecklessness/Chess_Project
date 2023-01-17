@@ -120,6 +120,29 @@ class King:
 
     def check_move(self, start, to):
 
+        if color(colorBoard[posVert[start]][posHori[start]]) == 'White':
+            if symbol.index(start[0]) + 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagWK and flagWL2:
+                if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
+                    board[7][7], board[7][5] = board[7][5], board[7][7]
+                    colorBoard[7][7], colorBoard[7][5] = colorBoard[7][5], colorBoard[7][7]
+                    return True
+            if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagWK and flagWL1:
+                if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3]:
+                    board[7][0], board[7][3] = board[7][3], board[7][0]
+                    colorBoard[7][0], colorBoard[7][3] = colorBoard[7][3], colorBoard[7][0]
+                    return True
+        else:
+            if symbol.index(start[0]) + 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL2:
+                if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
+                    board[0][7], board[0][5] = board[0][5], board[0][7]
+                    colorBoard[0][7], colorBoard[0][5] = colorBoard[0][5], colorBoard[0][7]
+                    return True
+            if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL1:
+                if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3]:
+                    board[0][0], board[0][3] = board[0][3], board[0][0]
+                    colorBoard[0][0], colorBoard[0][3] = colorBoard[0][3], colorBoard[0][0]
+                    return True
+
         try:
             if int(to[1]) - int(start[1]) == 1 and (symbol.index(start[0]) == symbol.index(to[0]) or symbol.index(to[0]) - symbol.index(start[0]) == 1 or symbol.index(start[0]) - symbol.index(to[0]) == 1):
                 return True
@@ -241,24 +264,34 @@ def check_line(start, to):
 
     return False
 
+
 WH, BH = Horse(), Horse()
 WP, BP = Pawn(), Pawn()
 WS, BS = Slon(), Slon()
-WL, BL = Rock(), Rock()
+WL1, WL2, BL1, BL2 = Rock(), Rock(), Rock(), Rock()
 WQ, BQ = Queen(), Queen()
 WK, BK = King(), King()
 
 
+flagWL1 = True
+flagWL2 = True
+flagBL1 = True
+flagBL2 = True
+flagWK = True
+flagBK = True
+
+
+
 board = [
-        #i----------------------------------------------
-    [BL, BH, BS, BQ, BK, BS, BH, BL], #j
+    #i----------------------------------------------
+    [BL1, BH, BS, BQ, BK, BS, BH, BL2], #j
     [BP, BP, BP, BP, BP, BP, BP, BP], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     ['..', '..', '..', '..', '..', '..', '..', '..'], #|
     [WP, WP, WP, WP, WP, WP, WP, WP], #|
-    [WL, WH, WS, WQ, WK, WS, WH, WL]  #|
+    [WL1, WH, WS, WQ, WK, WS, WH, WL2]  #|
 ]
 
 colorBoard = [
@@ -333,6 +366,12 @@ frspos, secpos = input().split()# формат A2 A4
 while frspos != 'esc' or secpos != 'esc':
     if board[posVert[frspos]][posHori[frspos]].check_move(frspos, secpos):
         chess_move(frspos, secpos)
+        if board[posVert[secpos]][posHori[secpos]] == WK: flagWK = False
+        if board[posVert[secpos]][posHori[secpos]] == BK: flagBK = False
+        if board[posVert[secpos]][posHori[secpos]] == WL1: flagWL1 = False
+        if board[posVert[secpos]][posHori[secpos]] == WL2: flagWL2 = False
+        if board[posVert[secpos]][posHori[secpos]] == BL1: flagBL1 = False
+        if board[posVert[secpos]][posHori[secpos]] == BL2: flagBL2 = False
     else:
-        pass
+        print('incorrect path')
     frspos, secpos = input().split()
