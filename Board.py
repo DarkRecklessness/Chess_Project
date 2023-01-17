@@ -42,14 +42,20 @@ class Pawn:
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start]] == '..':
+                    if int(to[1]) == 8:
+                        Ghost_Pawn('White', start)
                     return True
 
-            elif symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
+            if symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start] + 1] != '..':
+                    if int(to[1]) == 8:
+                        Ghost_Pawn('White', start)
                     return True
 
-            elif symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
+            if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start] - 1] != '..':
+                    if int(to[1]) == 8:
+                        Ghost_Pawn('White', start)
                     return True
 
             return False
@@ -62,14 +68,20 @@ class Pawn:
 
             if symbol.index(start[0]) == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start]] == '..':
+                    if int(to[1]) == 1:
+                        Ghost_Pawn('Black', start)
                     return True
 
-            elif symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
+            if symbol.index(start[0]) + 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start] + 1] != '..':
+                    if int(to[1]) == 1:
+                        Ghost_Pawn('Black', start)
                     return True
 
-            elif symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
+            if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start] - 1] != '..':
+                    if int(to[1]) == 1:
+                        Ghost_Pawn('Black', start)
                     return True
 
             return False
@@ -130,6 +142,27 @@ def color(x):
         return 'White'
     else:
         return 'Black'
+
+
+def Ghost_Pawn(color, start):
+
+    if color == 'White':
+        figure = input('Select figure: WQ/WH >>> ')
+        if figure == 'WQ':
+            board[posVert[start]][posHori[start]] = WQ
+            colorBoard[posVert[start]][posHori[start]] = 'WQ'
+        if figure == 'WH':
+            board[posVert[start]][posHori[start]] = WH
+            colorBoard[posVert[start]][posHori[start]] = 'WH'
+
+    if color == 'Black':
+        figure = input('Select figure: BQ/BH >>> ')
+        if figure == 'BQ':
+            board[posVert[start]][posHori[start]] = BQ
+            colorBoard[posVert[start]][posHori[start]] = 'BQ'
+        if figure == 'BH':
+            board[posVert[start]][posHori[start]] = BH
+            colorBoard[posVert[start]][posHori[start]] = 'BH'
 
 
 def check_diag(start, to):
