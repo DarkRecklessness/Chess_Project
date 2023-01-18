@@ -1,4 +1,10 @@
-# задаем начальную расстановку за БЕЛЫХ
+from stockfish import Stockfish
+stockfish = Stockfish("D:\PyCharm Community Edition 2022.2.3\Projects\Chess_Project\stockfish-windows-2022-x86-64-avx2.exe")
+stockfish.set_skill_level(20)
+stockfish.set_depth(15)
+stockfish.set_elo_rating(3200)
+# print(stockfish.get_parameters())
+
 symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
 
@@ -186,8 +192,14 @@ def color(x):
 
 def Ghost_Pawn(color, start):
 
+    global move
+
     if color == 'White':
-        figure = input('Select figure: WQ/WH >>> ')
+        try:
+            if move[4] != '':
+                figure = 'W' + move[4].upper()
+        except IndexError:
+            figure = input('Select figure: WQ/WH >>> ')
         if figure == 'WQ':
             board[posVert[start]][posHori[start]] = WQ
             colorBoard[posVert[start]][posHori[start]] = 'WQ'
@@ -198,7 +210,11 @@ def Ghost_Pawn(color, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'K'
 
     if color == 'Black':
-        figure = input('Select figure: BQ/BH >>> ')
+        try:
+            if move[4] != ' ':
+                figure = 'B' + move[4].upper()
+        except IndexError:
+            figure = input('Select figure: BQ/BH >>> ')
         if figure == 'BQ':
             board[posVert[start]][posHori[start]] = BQ
             colorBoard[posVert[start]][posHori[start]] = 'BQ'
@@ -290,10 +306,10 @@ flagK, flagQ, flagk, flagq = True, True, True, True
 flagp2 = '-'
 flagpvz = 0
 
+
 def fen():
 
     fen = ''
-
     for i in stockfishBoard:
         count = 0
         for j in i:
@@ -449,18 +465,27 @@ def chess_move(frspos, secpos):
         for i in outputBoard:
             i.reverse()
             print(" ".join(i))
-        print(fen())
+        # print(fen())
     else:
         for i in colorBoard:
             print(" ".join(i))
-        print(fen())
+        # print(fen())
 
 
 count_move = 1
-print(fen())
-frspos, secpos = input().split()# формат A2 A4
+
+if colorselect != 'Black': frspos, secpos = input().split()
+else:
+    stockfish.set_fen_position(fen())
+    move = stockfish.get_best_move().upper()
+    frspos = move[:2]
+    secpos = move[2::1]
+    print(frspos, secpos)
+
 while frspos != 'esc' or secpos != 'esc':
+
     if board[posVert[frspos]][posHori[frspos]].check_move(frspos, secpos):
+
         if board[posVert[frspos]][posHori[frspos]] == WK:
             flagWK = False
             flagK = False
@@ -482,9 +507,23 @@ while frspos != 'esc' or secpos != 'esc':
             flagBL2 = False
             flagk = False
         count_move += 1
+
         chess_move(frspos, secpos)
+
         flagpvz += 1
         flagp2 = '-'
+
     else:
         print('incorrect path')
-    frspos, secpos = input().split()
+
+    if colorselect == 'Black' and count_move % 2 == 0:
+        frspos, secpos = input().split()
+    elif colorselect == 'White' and count_move % 2 == 1:
+        frspos, secpos = input().split()
+    else:
+        stockfish.set_fen_position(fen())
+        move = stockfish.get_best_move().upper()
+        frspos = move[:2]
+        secpos = move[2:4]
+        print(frspos, secpos)
+        print(count_move)
