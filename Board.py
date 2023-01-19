@@ -1,7 +1,7 @@
 from stockfish import Stockfish
-stockfish = Stockfish("D:\PyCharm Community Edition 2022.2.3\Projects\Chess_Project\stockfish-windows-2022-x86-64-avx2.exe")
+stockfish = Stockfish("D:\PyCharm Community Edition 2022.2.3\Projects\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
-stockfish.set_depth(15)
+stockfish.set_depth(10)
 stockfish.set_elo_rating(3200)
 # print(stockfish.get_parameters())
 
@@ -41,8 +41,7 @@ class Pawn:
 
     def check_move(self, start, to):
 
-        global flagp2
-        global flagpvz
+        global flagp2, flagpvz
 
         if color(colorBoard[posVert[start]][posHori[start]]) == 'White':
 
@@ -64,12 +63,18 @@ class Pawn:
                         Ghost_Pawn('White', start)
                     flagpvz = 0
                     return True
+                elif movep2 == f'{to[0]}{int(to[1]) - 1}':
+                    enpassant(movep2)
+                    return True
 
             if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) + 1 == int(to[1]):
                 if colorBoard[posVert[start] - 1][posHori[start] - 1] != '..':
                     if int(to[1]) == 8:
                         Ghost_Pawn('White', start)
                     flagpvz = 0
+                    return True
+                elif movep2 == f'{to[0]}{int(to[1]) - 1}':
+                    enpassant(movep2)
                     return True
 
             return False
@@ -95,12 +100,18 @@ class Pawn:
                         Ghost_Pawn('Black', start)
                     flagpvz = 0
                     return True
+                elif movep2 == f'{to[0]}{int(to[1]) + 1}':
+                    enpassant(movep2)
+                    return True
 
             if symbol.index(start[0]) - 1 == symbol.index(to[0]) and int(start[1]) - 1 == int(to[1]):
                 if colorBoard[posVert[start] + 1][posHori[start] - 1] != '..':
                     if int(to[1]) == 1:
                         Ghost_Pawn('Black', start)
                     flagpvz = 0
+                    return True
+                elif movep2 == f'{to[0]}{int(to[1]) + 1}':
+                    enpassant(movep2)
                     return True
 
             return False
@@ -225,6 +236,15 @@ def Ghost_Pawn(color, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'k'
 
 
+def enpassant(movep2):
+
+    global board, colorBoard, stockfishBoard
+
+    board[posVert[movep2]][posHori[movep2]] = '..'
+    colorBoard[posVert[movep2]][posHori[movep2]] = '..'
+    stockfishBoard[posVert[movep2]][posHori[movep2]] = '.'
+
+
 def check_diag(start, to):
     try:
         if symbol.index(start[0]) == symbol.index(to[0]) - (int(to[1]) - int(start[1])) and start[1] < to[1]: ## C1 E3: 2 == 4 - (2) напр право-верх
@@ -305,6 +325,7 @@ def check_line(start, to):
 flagK, flagQ, flagk, flagq = True, True, True, True
 flagp2 = '-'
 flagpvz = 0
+movep2 = ''
 
 
 def fen():
@@ -481,6 +502,7 @@ else:
     frspos = move[:2]
     secpos = move[2::1]
     print(frspos, secpos)
+    # print(fen())
 
 while frspos != 'esc' or secpos != 'esc':
 
@@ -507,6 +529,7 @@ while frspos != 'esc' or secpos != 'esc':
             flagBL2 = False
             flagk = False
         count_move += 1
+        movep2 = flagp2.upper()
 
         chess_move(frspos, secpos)
 
@@ -526,4 +549,4 @@ while frspos != 'esc' or secpos != 'esc':
         frspos = move[:2]
         secpos = move[2:4]
         print(frspos, secpos)
-        print(count_move)
+        # print(count_move)
