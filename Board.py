@@ -545,7 +545,11 @@ while frspos != 'esc' or secpos != 'esc':
         frspos, secpos = input().split()
     else:
         stockfish.set_fen_position(fen())
-        move = stockfish.get_best_move().upper()
+        try:
+            move = stockfish.get_best_move().upper()
+        except AttributeError:
+            print('checkmate!')
+            exit()
         frspos = move[:2]
         secpos = move[2:4]
         print(frspos, secpos)
