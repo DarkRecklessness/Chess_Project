@@ -71,7 +71,7 @@ def conf(v: str):
         print("G")
     #H
     elif v == "аш" or v == "аж":
-        print("G")
+        print("H")
 
     #numbers
     elif v == 'один':
