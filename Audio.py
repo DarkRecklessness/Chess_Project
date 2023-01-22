@@ -56,7 +56,7 @@ def check(voice: str):
         else:
             v += vv[i]
 
-    print(gg)
+    print(gg[:2] + ' ' + gg[2:])
     gg = ''
 
     #print(gg)
