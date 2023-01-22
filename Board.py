@@ -200,6 +200,139 @@ def color(x):
     else:
         return 'Black'
 
+def is_valid_move(x):
+
+    colorFigure = colorselect
+
+    for i in range(1, min(7 - symbol.index(x[0]), 8 - int(x[1])) + 1): #F5 диагональ верх-право
+        if board[posVert[x] - i][posHori[x] + i] != '..':
+            print(board[posVert[x] - i][posHori[x] + i])
+            if colorFigure == 'White' and (board[posVert[x] - i][posHori[x] + i] in (BS, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] - i][posHori[x] + i] in (WS, WQ)):
+                return False
+            break
+
+    for i in range(1, min(symbol.index(x[0]), 8 - int(x[1])) + 1): #диагональ верх-лево
+        if board[posVert[x] - i][posHori[x] - i] != '..':
+            print(board[posVert[x] - i][posHori[x] - i])
+            if colorFigure == 'White' and (board[posVert[x] - i][posHori[x] - i] in (BS, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] - i][posHori[x] - i] in (WS, WQ)):
+                return False
+            break
+
+    for i in range(1, min(7 - symbol.index(x[0]), int(x[1]) - 1) + 1): #диагональ низ-право
+        if board[posVert[x] + i][posHori[x] + i] != '..':
+            print(board[posVert[x] + i][posHori[x] + i])
+            if colorFigure == 'White' and (board[posVert[x] + i][posHori[x] + i] in (BS, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] + i][posHori[x] + i] in (WS, WQ)):
+                return False
+            break
+
+    for i in range(1, min(symbol.index(x[0]), int(x[1]) - 1) + 1): #диагональ низ-лево
+        if board[posVert[x] + i][posHori[x] - i] != '..':
+            print(board[posVert[x] + i][posHori[x] - i])
+            if colorFigure == 'White' and (board[posVert[x] + i][posHori[x] - i] in (BS, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] + i][posHori[x] - i] in (WS, WQ)):
+                return False
+            break
+
+
+    for i in range(1, int(x[1])): #низ
+        if board[posVert[x] + i][posHori[x]] != '..':
+            if colorFigure == 'White' and (board[posVert[x] + i][posHori[x]] in (BL1, BL2, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] + i][posHori[x]] in (WL1, WL2, WQ)):
+                return False
+            break
+
+    for i in range(1, 8 - int(x[1]) + 1): #верх
+        if board[posVert[x] - i][posHori[x]] != '..':
+            if colorFigure == 'White' and (board[posVert[x] - i][posHori[x]] in (BL1, BL2, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x] - i][posHori[x]] in (WL1, WL2, WQ)):
+                return False
+            break
+
+    for i in range(1, 7 - symbol.index(x[0]) + 1): #право
+        if board[posVert[x]][posHori[x] + i] != '..':
+            if colorFigure == 'White' and (board[posVert[x]][posHori[x] + i] in (BL1, BL2, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x]][posHori[x] + i] in (WL1, WL2, WQ)):
+                return False
+            break
+
+    for i in range(1, symbol.index(x[0]) + 1): #лево
+        if board[posVert[x]][posHori[x] - i] != '..':
+            if colorFigure == 'White' and (board[posVert[x]][posHori[x] - i] in (BL1, BL2, BQ)):
+                return False
+            elif colorFigure == 'Black' and (board[posVert[x]][posHori[x] - i] in (WL1, WL2, WQ)):
+                return False
+            break
+
+
+    if colorFigure == 'White' and (BP in (board[posVert[x] - 1][posHori[x] + 1], board[posVert[x] - 1][posHori[x] - 1])):
+        return False
+    elif colorFigure == 'Black' and (WP in (board[posVert[x] + 1][posHori[x] + 1], board[posVert[x] + 1][posHori[x] - 1])):
+        return False
+
+
+    if colorFigure == 'White':
+        try:
+            if BH == board[posVert[x] - 2][posHori[x] + 1]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] - 1][posHori[x] + 2]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] + 1][posHori[x] + 2]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] + 2][posHori[x] + 1]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] + 2][posHori[x] - 1]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] + 1][posHori[x] - 2]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] - 1][posHori[x] - 2]: return False
+        except: pass
+        try:
+            if BH == board[posVert[x] - 2][posHori[x] - 1]: return False
+        except: pass
+
+    if colorFigure == 'Black':
+        try:
+            if WH == board[posVert[x] - 2][posHori[x] + 1]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] - 1][posHori[x] + 2]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] + 1][posHori[x] + 2]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] + 2][posHori[x] + 1]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] + 2][posHori[x] - 1]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] + 1][posHori[x] - 2]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] - 1][posHori[x] - 2]: return False
+        except: pass
+        try:
+            if WH == board[posVert[x] - 2][posHori[x] - 1]: return False
+        except: pass
+
+    return True
 
 def Ghost_Pawn(color, start):
 
@@ -438,6 +571,7 @@ colorselect = input('Select side>>> ')
 def chess_move(frspos, secpos):
 
     global flagpvz
+    global count_move
 
     if board[posVert[secpos]][posHori[secpos]] == '..':
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
@@ -453,6 +587,8 @@ def chess_move(frspos, secpos):
             posHori[secpos]], \
         stockfishBoard[posVert[frspos]][
             posHori[frspos]]
+
+        count_move += 1
 
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
         print('Больной?')
@@ -474,6 +610,7 @@ def chess_move(frspos, secpos):
         stockfishBoard[posVert[frspos]][
             posHori[frspos]]
 
+        count_move += 1
         flagpvz = 0
 
     outputBoard = []
@@ -495,24 +632,57 @@ def chess_move(frspos, secpos):
 
 count_move = 1
 
-if colorselect != 'Black': frspos, secpos = input().split()
-else:
-    stockfish.set_fen_position(fen())
-    move = stockfish.get_best_move().upper()
-    frspos = move[:2]
-    secpos = move[2::1]
-    print(frspos, secpos)
-    # print(fen())
+# if colorselect != 'Black': frspos, secpos = input().split()
+# else:
+#     stockfish.set_fen_position(fen())
+#     move = stockfish.get_best_move().upper()
+#     frspos = move[:2]
+#     secpos = move[2::1]
+#     print(frspos, secpos)
 
-while frspos != 'esc' or secpos != 'esc':
+posWK = 'E1'
+posBK = 'E8'
+
+while True:
+
+    if colorselect == 'Black' and count_move % 2 == 0:
+        frspos, secpos = input().split()
+        if board[posVert[frspos]][posHori[frspos]] == BK:
+            if not is_valid_move(secpos):
+                print('incorrect path')
+                continue
+        elif colorBoard[posVert[frspos]][posHori[frspos]][0] != 'B' or (not is_valid_move(posBK)):
+            print('incorrect path')
+            continue
+    elif colorselect == 'White' and count_move % 2 == 1:
+        frspos, secpos = input().split()
+        if board[posVert[frspos]][posHori[frspos]] == WK:
+            if not is_valid_move(secpos):
+                print('incorrect path')
+                continue
+        elif colorBoard[posVert[frspos]][posHori[frspos]][0] != 'W' or (not is_valid_move(posWK)):
+            print('incorrect path')
+            continue
+    else:
+        stockfish.set_fen_position(fen())
+        try:
+            move = stockfish.get_best_move().upper()
+        except AttributeError:
+            print('checkmate!')
+            exit()
+        frspos = move[:2]
+        secpos = move[2:4]
+        print(frspos, secpos)
 
     if board[posVert[frspos]][posHori[frspos]].check_move(frspos, secpos):
 
         if board[posVert[frspos]][posHori[frspos]] == WK:
+            posWK = secpos
             flagWK = False
             flagK = False
             flagQ = False
         if board[posVert[frspos]][posHori[frspos]] == BK:
+            posBK = secpos
             flagBK = False
             flagk = False
             flagq = False
@@ -528,7 +698,6 @@ while frspos != 'esc' or secpos != 'esc':
         if board[posVert[frspos]][posHori[frspos]] == BL2:
             flagBL2 = False
             flagk = False
-        count_move += 1
         movep2 = flagp2.upper()
 
         chess_move(frspos, secpos)
@@ -538,19 +707,3 @@ while frspos != 'esc' or secpos != 'esc':
 
     else:
         print('incorrect path')
-
-    if colorselect == 'Black' and count_move % 2 == 0:
-        frspos, secpos = input().split()
-    elif colorselect == 'White' and count_move % 2 == 1:
-        frspos, secpos = input().split()
-    else:
-        stockfish.set_fen_position(fen())
-        try:
-            move = stockfish.get_best_move().upper()
-        except AttributeError:
-            print('checkmate!')
-            exit()
-        frspos = move[:2]
-        secpos = move[2:4]
-        print(frspos, secpos)
-        # print(count_move)
