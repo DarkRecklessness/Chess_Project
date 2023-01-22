@@ -76,7 +76,7 @@ def conf(v: str):
     elif v == "це" or v == "со" or v == "цель":
         return("C")
     #D
-    elif v == "дэ" or v == "да" or v == "ты" or v == "дай":
+    elif v == "дэ" or v == "да" or v == "ты" or v == "дай" or v == "де":
         return("D")
     #E
     elif v == "е" or v == "я" or v == "ей" or v == "есть" or v == "зе" or v == "все":
