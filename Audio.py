@@ -35,14 +35,33 @@ def va_listen(callback):
 def check(voice: str):
     v = ''
     vv = voice + ' '
+    gg = ''
     print(voice)
     for i in range(len(vv)):
         if vv[i] == ' ':
             #print(v)
-            conf(v)
+            #print(conf(v))
+
+            '''if conf(v) == 1 or conf(v) == 2 or conf(v) == 3 or conf(v) == 4 \
+               or conf(v) == 5 or conf(v) == 6 or conf(v) == 7 or conf(v) == 8:
+                gg += conf(v)
+                gg += ' '
+            else:'''
+            if conf(v) == None:
+                pass
+            else:
+                gg += conf(v)
             v = ''
+
         else:
             v += vv[i]
+
+    print(gg)
+    gg = ''
+
+    #print(gg)
+    #gg.clear()
+
 
 
 
@@ -50,49 +69,52 @@ def conf(v: str):
 
     #A
     if v == "а":
-        print("A")
+        return("A")
     #B
     elif v == "бы" or v == "бэ" or v == "быт" or v == "бэт" or v == "бей" or v == "б" or v == "бэд":
-        print("B")
+        return("B")
     #C
     elif v == "це" or v == "со":
-        print("C")
+        return("C")
     #D
     elif v == "дэ" or v == "да" or v == "ты" or v == "дай":
-        print("D")
+        return("D")
     #E
     elif v == "е" or v == "я" or v == "ей" or v == "есть" or v == "зе" or v == "все":
-        print("E")
+        return("E")
     #F
     elif v == "эф" or v == "в":
-        print("F")
+        return("F")
     #G
     elif v == "джи" or v == "джим" or v == "джой" or v == "же":
-        print("G")
+        return("G")
     #H
     elif v == "аш" or v == "аж":
         print("H")
 
     #numbers
     elif v == 'один':
-        print("1")
+        return("1")
     elif v == "два":
-        print("2")
+        return("2")
     elif v == "три":
-        print("3")
+        return("3")
     elif v == "четыре":
-        print("4")
+        return("4")
     elif v == "пять":
-        print("5")
+        return("5")
     elif v == "шесть":
-        print("6")
+        return("6")
     elif v == "семь":
-        print("7")
+        return("7")
     elif v == "восемь":
-        print("8")
+        return("8")
     #specials
     elif v == "едва":
-        print("E2")
+        return("E2")
+
+    else:
+        pass
 
 
 va_listen(check)
