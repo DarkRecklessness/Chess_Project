@@ -73,7 +73,7 @@ def conf(v: str):
     elif v == "бы" or v == "бэ" or v == "быт" or v == "бэт" or v == "бей" or v == "б" or v == "бэд":
         return("B")
     #C
-    elif v == "це" or v == "со":
+    elif v == "це" or v == "со" or v == "цель":
         return("C")
     #D
     elif v == "дэ" or v == "да" or v == "ты" or v == "дай":
