@@ -3,7 +3,6 @@ import sys
 import sounddevice as sd
 import queue
 import json
-from fuzzywuzzy import fuzz
 
 model = vosk.Model("model-small_rus") #Write ur path
 
