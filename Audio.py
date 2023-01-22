@@ -52,13 +52,13 @@ def conf(v: str):
     if v == "а":
         print("A")
     #B
-    elif v == "бы" or v == "бэ" or v == "быт" or v == "бэт" or v == "бей" or v == "б":
+    elif v == "бы" or v == "бэ" or v == "быт" or v == "бэт" or v == "бей" or v == "б" or v == "бэд":
         print("B")
     #C
     elif v == "це" or v == "со":
         print("C")
     #D
-    elif v == "дэ" or v == "д":
+    elif v == "дэ" or v == "да" or v == "ты" or v == "дай":
         print("D")
     #E
     elif v == "е" or v == "я" or v == "ей" or v == "есть" or v == "зе" or v == "все":
