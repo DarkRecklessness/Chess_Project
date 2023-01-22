@@ -111,6 +111,8 @@ def conf(v: str):
     #specials
     elif v == "едва":
         return("E2")
+    elif v == "дэвид":
+        return("D5")
 
     else:
         pass
