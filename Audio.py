@@ -89,7 +89,7 @@ def conf(v: str):
         return("G")
     #H
     elif v == "аш" or v == "аж":
-        print("H")
+        return("H")
 
     #numbers
     elif v == 'один':
