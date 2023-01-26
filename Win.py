@@ -1,7 +1,7 @@
 from stockfish import Stockfish
 import speech_recognition as sp
 
-stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
+stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe") #Ur path
 stockfish.set_skill_level(20)
 stockfish.set_depth(10)
 stockfish.set_elo_rating(3200)
