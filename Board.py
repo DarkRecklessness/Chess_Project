@@ -1,5 +1,6 @@
 from stockfish import Stockfish
-stockfish = Stockfish("D:\PyCharm Community Edition 2022.2.3\Projects\stockfish-windows-2022-x86-64-avx2.exe")
+
+stockfish = Stockfish("C:\\Users\\Denis\\Desktop\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
 stockfish.set_depth(10)
 stockfish.set_elo_rating(3200)
@@ -239,7 +240,6 @@ def is_valid_move(x, board):
 
     for i in range(1, int(x[1])): #низ
         if board[posVert[x] + i][posHori[x]] != '..':
-            print(board[posVert[x] + i][posHori[x]])
             if colorFigure == 'White' and (board[posVert[x] + i][posHori[x]] in (BL1, BL2, BQ)):
                 return False
             elif colorFigure == 'Black' and (board[posVert[x] + i][posHori[x]] in (WL1, WL2, WQ)):
@@ -248,7 +248,6 @@ def is_valid_move(x, board):
 
     for i in range(1, 8 - int(x[1]) + 1): #верх
         if board[posVert[x] - i][posHori[x]] != '..':
-            print(board[posVert[x] - i][posHori[x]])
             if colorFigure == 'White' and (board[posVert[x] - i][posHori[x]] in (BL1, BL2, BQ)):
                 return False
             elif colorFigure == 'Black' and (board[posVert[x] - i][posHori[x]] in (WL1, WL2, WQ)):
@@ -257,7 +256,6 @@ def is_valid_move(x, board):
 
     for i in range(1, 7 - symbol.index(x[0]) + 1): #право
         if board[posVert[x]][posHori[x] + i] != '..':
-            print(board[posVert[x]][posHori[x] + i])
             if colorFigure == 'White' and (board[posVert[x]][posHori[x] + i] in (BL1, BL2, BQ)):
                 return False
             elif colorFigure == 'Black' and (board[posVert[x]][posHori[x] + i] in (WL1, WL2, WQ)):
@@ -266,7 +264,6 @@ def is_valid_move(x, board):
 
     for i in range(1, symbol.index(x[0]) + 1): #лево
         if board[posVert[x]][posHori[x] - i] != '..':
-            print(board[posVert[x]][posHori[x] - i])
             if colorFigure == 'White' and (board[posVert[x]][posHori[x] - i] in (BL1, BL2, BQ)):
                 return False
             elif colorFigure == 'Black' and (board[posVert[x]][posHori[x] - i] in (WL1, WL2, WQ)):
@@ -274,11 +271,20 @@ def is_valid_move(x, board):
             break
 
 
-    if colorFigure == 'White' and (BP in (board[posVert[x] - 1][posHori[x] + 1], board[posVert[x] - 1][posHori[x] - 1])):
-        return False
-    elif colorFigure == 'Black' and (WP in (board[posVert[x] + 1][posHori[x] + 1], board[posVert[x] + 1][posHori[x] - 1])):
-        return False
-
+    if colorFigure == 'White' and posVert[x] != 0:
+        if posHori[x] < 7:
+            if BP == board[posVert[x] - 1][posHori[x] + 1]:
+                return False
+        if posHori[x] > 0:
+            if BP == board[posVert[x] - 1][posHori[x] - 1]:
+                return False
+    elif colorFigure == 'Black' and posVert[x] != 7:
+        if posHori[x] < 7:
+            if WP == board[posVert[x] + 1][posHori[x] + 1]:
+                return False
+        if posHori[x] > 0:
+            if WP == board[posVert[x] + 1][posHori[x] - 1]:
+                return False
 
     if colorFigure == 'White':
         try:
@@ -720,8 +726,6 @@ while True:
         stockfish.set_fen_position(fen())
         try:
             move = stockfish.get_best_move().upper()
-            print(move) ###
-            print(move[4].isdigit()) ###
         except (AttributeError, IndexError):
             pass
             # print('checkmate!')
