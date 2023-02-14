@@ -1,7 +1,8 @@
 from stockfish import Stockfish
 import speech_recognition as sp
+import keyboard
 
-stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe") #Ur path
+stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
 stockfish.set_depth(10)
 stockfish.set_elo_rating(3200)
@@ -198,29 +199,79 @@ class King:
 
 def check_a():
 
+
     sr = sp.Recognizer()
-    sr.pause_threshold = 0.55
+    sr.pause_threshold = 0.7
     #sr.phrase_threshold = 0.2
 
     with sp.Microphone() as mic:
         sr.adjust_for_ambient_noise(source=mic, duration=0.5)
         print("start")
+        st_time = time.time()
         audio = sr.listen(source=mic)
-
-        query = sr.recognize_google(audio_data=audio, language='ru-Ru')
+        try:
+            query = sr.recognize_google(audio_data=audio, language='ru-Ru')
+        except("speech_recognition.UnknownValueError"):
+            print("Repeat, pls")
+            st()
+        if (time.time() - st_time) > 10:
+            print("Repeat, pls")
+            st()
+    #print(query)
 
     return query
 
 
 def conf():
+
     voice = check_a()
+    print(voice)
+    st = str(voice) + ' '
+    voice = ''
+    st2 = ''
+    mas = []
+    for i in range(len(st)):
+        if st[i] == ' ':
+            mas.append(st2)
+            st2 = ''
+        else:
+            st2 = st2 + st[i]
+        #print(st[i])
+
+    for i in range(len(mas)):
+
+        if mas[i] == "опять":
+            mas[i] = "A5"
+        if mas[i] == "а":
+            mas[i] = "A"
+        if mas[i] == "А":
+            mas[i] = "A"
+        if mas[i] == "два":
+            mas[i] = "2"
+        if mas[i] == "едва":
+            mas[i] = "E2"
+
+    for i in range(len(mas)):
+        voice = voice + mas[i]
+
     if (len(voice)) == 4:
+        pass
         voice = voice.upper()
         voice = voice[:2] + ' ' + voice[2:]
+        print(voice)
     else:
         pass
 
     return voice
+
+
+
+def st():
+    print("Enter Enter")
+    while True:
+        if keyboard.record("Enter"):
+            return conf()
+            #break
 
 
 def color(x):
@@ -695,6 +746,8 @@ while True:
                 exit()
             ee = conf()
             frspos, secpos = ee[:2], ee[3:5]
+            #print(frspos)
+            #print(secpos)
             print(frspos, secpos)
             if board[posVert[frspos]][posHori[frspos]] == WK:
                 if not is_valid_move(secpos, board):
