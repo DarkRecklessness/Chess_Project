@@ -1,6 +1,7 @@
 from stockfish import Stockfish
 import speech_recognition as sp
 import keyboard
+import time
 
 stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
@@ -197,27 +198,24 @@ class King:
             pass
         return False
 
+
 def check_a():
-
-
     sr = sp.Recognizer()
     sr.pause_threshold = 0.7
-    #sr.phrase_threshold = 0.2
+    # sr.phrase_threshold = 0.2
 
     with sp.Microphone() as mic:
         sr.adjust_for_ambient_noise(source=mic, duration=0.5)
         print("start")
         st_time = time.time()
         audio = sr.listen(source=mic)
-        try:
-            query = sr.recognize_google(audio_data=audio, language='ru-Ru')
-        except("speech_recognition.UnknownValueError"):
-            print("Repeat, pls")
-            st()
-        if (time.time() - st_time) > 10:
-            print("Repeat, pls")
-            st()
-    #print(query)
+        query = ''
+        while (time.time() - st_time) < 5:
+            try:
+                query = sr.recognize_google(audio_data=audio, language='ru-Ru')
+            except("speech_recognition.UnknownValueError"):
+                print("Repeat, pls")
+                st()
 
     return query
 
@@ -225,7 +223,7 @@ def check_a():
 def conf():
 
     voice = check_a()
-    print(voice)
+    #print(voice)
     st = str(voice) + ' '
     voice = ''
     st2 = ''
@@ -258,7 +256,7 @@ def conf():
         pass
         voice = voice.upper()
         voice = voice[:2] + ' ' + voice[2:]
-        print(voice)
+        #print(voice)
     else:
         pass
 
