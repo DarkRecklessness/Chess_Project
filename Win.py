@@ -200,24 +200,35 @@ class King:
 
 
 def check_a():
+
+
     sr = sp.Recognizer()
     sr.pause_threshold = 0.7
-    # sr.phrase_threshold = 0.2
+    #sr.phrase_threshold = 0.2
 
     with sp.Microphone() as mic:
         sr.adjust_for_ambient_noise(source=mic, duration=0.5)
         print("start")
         st_time = time.time()
         audio = sr.listen(source=mic)
-        query = ''
-        while (time.time() - st_time) < 5:
-            try:
-                query = sr.recognize_google(audio_data=audio, language='ru-Ru')
-            except("speech_recognition.UnknownValueError"):
-                print("Repeat, pls")
-                st()
+        aa = ''
+        #end_time = time.time()
+        #while (end_time - st_time) < 4:
+        try:
+            query = sr.recognize_google(audio_data=audio, language='ru-Ru')
+            aa = query
+            #end_time = time.time()
+        except("speech_recognition.UnknownValueError"):
+            print("Repeat, pls")
+            st()
+        #end_time = time.time()
 
-    return query
+    if aa == '' or aa == ' ':
+        print("Repeat, plssss")
+        st()
+    else:
+        #print(aa)
+        return aa
 
 
 def conf():
@@ -231,11 +242,11 @@ def conf():
     for i in range(len(st)):
         if st[i] == ' ':
             mas.append(st2)
-            st2 = ''
+            st2 = ' '
         else:
             st2 = st2 + st[i]
         #print(st[i])
-
+    #print((mas))
     for i in range(len(mas)):
 
         if mas[i] == "опять":
@@ -248,9 +259,30 @@ def conf():
             mas[i] = "2"
         if mas[i] == "едва":
             mas[i] = "E2"
-
+        #else:
+        #    pass
+    st = ''
     for i in range(len(mas)):
-        voice = voice + mas[i]
+        st = st + mas[i]
+
+    st2 = ''
+    for i in range(len(st)):
+        if st[i] == 'а' or st[i] == 'А':
+            st2 += 'A'
+        elif st[i] == 'б' or st[i] == 'Б':
+            st2 += 'B'
+        elif st[i] == 'с' or st[i] == 'С':
+            st2 += 'C'
+        elif st[i] == 'д' or st[i] == 'Д':
+            st2 += 'D'
+        elif st[i] == 'е' or st[i] == 'Е':
+            st2 += 'E'
+        else:
+            st2 += st[i]
+
+
+    for i in range(len(st2)):
+        voice = voice + st2[i]
 
     if (len(voice)) == 4:
         pass
@@ -259,15 +291,16 @@ def conf():
         #print(voice)
     else:
         pass
-
+    #print(voice + "hghghghg")
     return voice
 
 
 
 def st():
-    print("Enter Enter")
+    print("Enter g")
     while True:
-        if keyboard.record("Enter"):
+        if keyboard.record("g"):
+            time.sleep(0.4)
             return conf()
             #break
 
@@ -742,7 +775,7 @@ while True:
             if stockfish.get_best_move() == None:
                 print('checkmate!')
                 exit()
-            ee = conf()
+            ee = st()
             frspos, secpos = ee[:2], ee[3:5]
             #print(frspos)
             #print(secpos)
@@ -777,7 +810,8 @@ while True:
             if stockfish.get_best_move() == None:
                 print('checkmate!')
                 exit()
-            frspos, secpos = conf()[:2], conf()[3:5]
+            ee = st()
+            frspos, secpos = ee[:2], ee[3:5]
             if board[posVert[frspos]][posHori[frspos]] == BK:
                 if not is_valid_move(secpos, board):
                     print('incorrect path')
