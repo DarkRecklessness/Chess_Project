@@ -7,7 +7,7 @@
 
 
 Используется изменённая версия функции в библиотеке SpeechRecognition
-Редактированная функция recognize_google 
+Редактированная функция recognize_google - https://github.com/DarkRecklessness/Chess_Project/blob/main/recognize_google
 
 
 
