@@ -19,12 +19,13 @@
 '''
 
 
+
 from stockfish import Stockfish
 import speech_recognition as sp
 import keyboard
 import time
 
-stockfish = Stockfish("C:\\Users\\valer\PycharmProjects\\Chess\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
+stockfish = Stockfish("C:\\Users\\Denis\\Desktop\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
 stockfish.set_depth(10)
 stockfish.set_elo_rating(3200)
@@ -230,7 +231,7 @@ def check_a():
     with sp.Microphone() as mic:
         sr.adjust_for_ambient_noise(source=mic, duration=0.5)
         print("start")
-        st_time = time.time()
+        # st_time = time.time()
         audio = sr.listen(source=mic)
         aa = ''
         #end_time = time.time()
@@ -306,13 +307,14 @@ def conf():
         voice = voice + st2[i]
 
     if (len(voice)) == 4:
-        pass
+        # pass
         voice = voice.upper()
         voice = voice[:2] + ' ' + voice[2:]
         #print(voice)
     else:
         pass
     #print(voice + "hghghghg")
+    voice = voice.upper()
     return voice
 
 
@@ -737,7 +739,7 @@ def chess_move(frspos, secpos):
         count_move += 1
 
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
-        print('Больной?')
+        print('incorrect path')
     else:
         board[posVert[secpos]][posHori[secpos]] = '..'
         colorBoard[posVert[secpos]][posHori[secpos]] = '..'
@@ -833,6 +835,7 @@ while True:
                 exit()
             ee = st()
             frspos, secpos = ee[:2], ee[3:5]
+            print(frspos, secpos)
             if board[posVert[frspos]][posHori[frspos]] == BK:
                 if not is_valid_move(secpos, board):
                     print('incorrect path')
