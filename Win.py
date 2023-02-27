@@ -1,3 +1,24 @@
+'''
+
+
+
+
+
+
+
+Используется изменённая версия функции в библиотеке SpeechRecognition
+Редактированная функция recognize_google 
+
+
+
+
+
+
+
+
+'''
+
+
 from stockfish import Stockfish
 import speech_recognition as sp
 import keyboard
