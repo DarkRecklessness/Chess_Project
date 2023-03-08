@@ -162,12 +162,14 @@ class King:
         if color(colorBoard[posVert[start]][posHori[start]]) == 'White':
             if symbol.index(start[0]) + 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagWK and flagWL2:
                 if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
+                    print([(8, 11), (8, 9)])
                     board[7][7], board[7][5] = board[7][5], board[7][7]
                     colorBoard[7][7], colorBoard[7][5] = colorBoard[7][5], colorBoard[7][7]
                     stockfishBoard[7][7], stockfishBoard[7][5] = stockfishBoard[7][5], stockfishBoard[7][7]
                     return True
             if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagWK and flagWL1:
                 if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3] == '..':
+                    print([(8, 4), (8, 7)])
                     board[7][0], board[7][3] = board[7][3], board[7][0]
                     colorBoard[7][0], colorBoard[7][3] = colorBoard[7][3], colorBoard[7][0]
                     stockfishBoard[7][0], stockfishBoard[7][3] = stockfishBoard[7][3], stockfishBoard[7][0]
@@ -175,12 +177,14 @@ class King:
         else:
             if symbol.index(start[0]) + 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL2:
                 if board[posVert[start]][posHori[start] + 1] == '..' and board[posVert[start]][posHori[start] + 2] == '..':
+                    print([(1, 11), (1, 9)])
                     board[0][7], board[0][5] = board[0][5], board[0][7]
                     colorBoard[0][7], colorBoard[0][5] = colorBoard[0][5], colorBoard[0][7]
                     stockfishBoard[0][7], stockfishBoard[0][5] = stockfishBoard[0][5], stockfishBoard[0][7]
                     return True
             if symbol.index(start[0]) - 2 == symbol.index(to[0]) and int(start[1]) == int(to[1]) and flagBK and flagBL1:
                 if board[posVert[start]][posHori[start] - 1] == '..' and board[posVert[start]][posHori[start] - 2] == '..' and board[posVert[start]][posHori[start] - 3] == '..':
+                    print([(1, 4), (1, 7)])
                     board[0][0], board[0][3] = board[0][3], board[0][0]
                     colorBoard[0][0], colorBoard[0][3] = colorBoard[0][3], colorBoard[0][0]
                     stockfishBoard[0][0], stockfishBoard[0][3] = stockfishBoard[0][3], stockfishBoard[0][0]
@@ -823,10 +827,46 @@ def is_valid_move(x, board):
 
     return True
 
+
+def parkzone(secpos):
+
+    global parkWhite, parkBlack
+
+    if color(colorBoard[posVert[secpos]][posHori[secpos]]) == 'White':
+        flagpark = True
+        for i in range(len(parkWhite)):
+            if parkWhite[i][0] == '..' and flagpark:
+                print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 1]))
+                parkWhite[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
+                flagpark = False
+        if flagpark:
+            for i in range(len(parkWhite)):
+                if parkWhite[i][1] == '..' and flagpark:
+                    print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 2]))
+                    parkWhite[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
+                    flagpark = False
+
+    else:
+        flagpark = True
+        for i in range(len(parkBlack)):
+            if parkBlack[i][1] == '..' and flagpark:
+                print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 14]))
+                parkBlack[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
+                flagpark = False
+        if flagpark:
+            for i in range(len(parkBlack)):
+                if parkBlack[i][0] == '..' and flagpark:
+                    print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 13]))
+                    parkBlack[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
+                    flagpark = False
+
+
 def Ghost_Pawn(colorghost, start):
 
     global move
     global board, colorBoard, stockfishBoard
+
+    parkzone(start)
 
     if colorghost == 'White':
         try:
@@ -840,6 +880,7 @@ def Ghost_Pawn(colorghost, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'Q'
             for i in range(4):
                 if addWhite[i] == 'WQ':
+                    print(path([i + 1, 15], [posVert[start] + 1, posHori[start] + 4]))
                     addWhite[i] = '..'
                 break
         elif figure in ('WH', 'WN'):
@@ -848,6 +889,7 @@ def Ghost_Pawn(colorghost, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'K'
             for i in range(4, 8):
                 if addWhite[i] == 'WH':
+                    print(path([i + 1, 15], [posVert[start] + 1, posHori[start] + 4]))
                     addWhite[i] = '..'
                 break
 
@@ -863,6 +905,7 @@ def Ghost_Pawn(colorghost, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'q'
             for i in range(4, 8):
                 if addBlack[i] == 'BQ':
+                    print(path([i + 1, 0], [posVert[start] + 1, posHori[start] + 4]))
                     addBlack[i] = '..'
                 break
         elif figure in ('BH', 'BN'):
@@ -871,6 +914,7 @@ def Ghost_Pawn(colorghost, start):
             stockfishBoard[posVert[start]][posHori[start]] = 'k'
             for i in range(4):
                 if addBlack[i] == 'BH':
+                    print(path([i + 1, 0], [posVert[start] + 1, posHori[start] + 4]))
                     addBlack[i] = '..'
                 break
 
@@ -878,6 +922,36 @@ def Ghost_Pawn(colorghost, start):
 def enpassant(movep2):
 
     global board, colorBoard, stockfishBoard
+
+    # if color(colorBoard[posVert[movep2]][posHori[movep2]]) == 'White':
+    #     flagpark = True
+    #     for i in range(len(parkWhite)):
+    #         if parkWhite[i][0] == '..' and flagpark:
+    #             print(path([posVert[movep2] + 1, posHori[movep2] + 4], [i + 1, 1]))
+    #             parkWhite[i][0] = colorBoard[posVert[movep2]][posHori[movep2]]
+    #             flagpark = False
+    #     if flagpark:
+    #         for i in range(len(parkWhite)):
+    #             if parkWhite[i][1] == '..' and flagpark:
+    #                 print(path([posVert[movep2] + 1, posHori[movep2] + 4], [i + 1, 2]))
+    #                 parkWhite[i][1] = colorBoard[posVert[movep2]][posHori[movep2]]
+    #                 flagpark = False
+    #
+    # else:
+    #     flagpark = True
+    #     for i in range(len(parkBlack)):
+    #         if parkBlack[i][1] == '..' and flagpark:
+    #             print(path([posVert[movep2] + 1, posHori[movep2] + 4], [i + 1, 14]))
+    #             parkBlack[i][1] = colorBoard[posVert[movep2]][posHori[movep2]]
+    #             flagpark = False
+    #     if flagpark:
+    #         for i in range(len(parkBlack)):
+    #             if parkBlack[i][0] == '..' and flagpark:
+    #                 print(path([posVert[movep2] + 1, posHori[movep2] + 4], [i + 1, 13]))
+    #                 parkBlack[i][0] = colorBoard[posVert[movep2]][posHori[movep2]]
+    #                 flagpark = False
+
+    parkzone(movep2)
 
     board[posVert[movep2]][posHori[movep2]] = '..'
     colorBoard[posVert[movep2]][posHori[movep2]] = '..'
@@ -1140,10 +1214,10 @@ def chess_move(frspos, secpos):
 
     if board[posVert[secpos]][posHori[secpos]] == '..':
 
-        if board[posVert[frspos]][posHori[frspos]] in (WH, BH):
+        if board[posVert[frspos]][posHori[frspos]] in (WH, BH, WK, BK):
             print(path([posVert[frspos] + 1, posHori[frspos] + 4], [posVert[secpos] + 1, posHori[secpos] + 4]))
         else:
-            print((posVert[frspos] + 1, posHori[frspos] + 4), (posVert[secpos] + 1, posHori[secpos] + 4))
+            print([(posVert[frspos] + 1, posHori[frspos] + 4), (posVert[secpos] + 1, posHori[secpos] + 4)])
 
         board[posVert[frspos]][posHori[frspos]], board[posVert[secpos]][posHori[secpos]] = board[posVert[secpos]][
                                                                                                posHori[secpos]], \
@@ -1164,38 +1238,40 @@ def chess_move(frspos, secpos):
     elif colorBoard[posVert[frspos]][posHori[frspos]][0] == colorBoard[posVert[secpos]][posHori[secpos]][0]:
         print('incorrect path')
     else:
-        if color(colorBoard[posVert[secpos]][posHori[secpos]]) == 'White':
-            flagpark = True
-            for i in range(len(parkWhite)):
-                if parkWhite[i][0] == '..' and flagpark:
-                    print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 1]))
-                    parkWhite[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
-                    flagpark = False
-            if flagpark:
-                for i in range(len(parkWhite)):
-                    if parkWhite[i][1] == '..' and flagpark:
-                        print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 2]))
-                        parkWhite[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
-                        flagpark = False
+        # if color(colorBoard[posVert[secpos]][posHori[secpos]]) == 'White':
+        #     flagpark = True
+        #     for i in range(len(parkWhite)):
+        #         if parkWhite[i][0] == '..' and flagpark:
+        #             print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 1]))
+        #             parkWhite[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
+        #             flagpark = False
+        #     if flagpark:
+        #         for i in range(len(parkWhite)):
+        #             if parkWhite[i][1] == '..' and flagpark:
+        #                 print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 2]))
+        #                 parkWhite[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
+        #                 flagpark = False
+        #
+        # else:
+        #     flagpark = True
+        #     for i in range(len(parkBlack)):
+        #         if parkBlack[i][1] == '..' and flagpark:
+        #             print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 14]))
+        #             parkBlack[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
+        #             flagpark = False
+        #     if flagpark:
+        #         for i in range(len(parkBlack)):
+        #             if parkBlack[i][0] == '..' and flagpark:
+        #                 print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 13]))
+        #                 parkBlack[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
+        #                 flagpark = False
 
-        else:
-            flagpark = True
-            for i in range(len(parkBlack)):
-                if parkBlack[i][1] == '..' and flagpark:
-                    print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 14]))
-                    parkBlack[i][1] = colorBoard[posVert[secpos]][posHori[secpos]]
-                    flagpark = False
-            if flagpark:
-                for i in range(len(parkBlack)):
-                    if parkBlack[i][0] == '..' and flagpark:
-                        print(path([posVert[secpos] + 1, posHori[secpos] + 4], [i + 1, 13]))
-                        parkBlack[i][0] = colorBoard[posVert[secpos]][posHori[secpos]]
-                        flagpark = False
+        parkzone(secpos)
 
-        if board[posVert[frspos]][posHori[frspos]] in (WH, BH):
+        if board[posVert[frspos]][posHori[frspos]] in (WH, BH, WK, BK):
             print(path([posVert[frspos] + 1, posHori[frspos] + 4], [posVert[secpos] + 1, posHori[secpos] + 4]))
         else:
-            print((posVert[frspos] + 1, posHori[frspos] + 4), (posVert[secpos] + 1, posHori[secpos] + 4))
+            print([(posVert[frspos] + 1, posHori[frspos] + 4), (posVert[secpos] + 1, posHori[secpos] + 4)])
 
         board[posVert[secpos]][posHori[secpos]] = '..'
         colorBoard[posVert[secpos]][posHori[secpos]] = '..'
