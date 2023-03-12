@@ -11,7 +11,7 @@ import time
 stockfish = Stockfish("C:\\Users\\Denis\\Desktop\\stockfish_15.1_win_x64_avx2\\stockfish-windows-2022-x86-64-avx2.exe")
 stockfish.set_skill_level(20)
 stockfish.set_depth(10)
-stockfish.set_elo_rating(3800)
+stockfish.set_elo_rating(300)
 # print(stockfish.get_parameters())
 
 symbol = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
@@ -268,8 +268,9 @@ def path(pos, end):
 
     mas[end[0]][end[1]] = 0 # для того что бы выбрать путь перед съедением фигуры
 
-    for i in mas:
-        print(i)
+    print('   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15')
+    for i in range(len(mas)):
+        print(i, mas[i])
 
     m = []
     mstart = []
@@ -525,6 +526,29 @@ def path(pos, end):
             pos[0] - 2 == end[0] and pos[1] - 2 == end[1]):
         move_figure(pos[0] - 1, pos[1] - 1, pos[0] - 2, pos[1] - 2)
 
+    def optimize(mas: list):
+
+        d, h, v, i = 2, 2, 2, 0
+
+        while i != len(mas) - 2:
+            if abs(mas[i][0] - mas[i + 2][0]) == d and abs(mas[i][1] - mas[i + 2][1]) == d:  # Диагонали
+                d += 1
+                mas.pop(i + 1)
+                continue
+            d = 2
+            if mas[i][0] == mas[i + 2][0] == mas[i + 1][0] and abs(mas[i][1] - mas[i + 2][1]) == h:  # Горизонтали
+                h += 1
+                mas.pop(i + 1)
+                continue
+            h = 2
+            if abs(mas[i][0] - mas[i + 2][0]) == v and mas[i][1] == mas[i + 2][1] == mas[i + 1][1]:  # Вертикали
+                v += 1
+                mas.pop(i + 1)
+                continue
+            v = 2
+            i += 1
+
+
     def printmas():
         # for i in m:
         #     print(i)
@@ -559,9 +583,16 @@ def path(pos, end):
                 for i in range(len(mas) - 1):
                     massiv.append([mas[i], mas[i + 1]])
                 allpath[minimal] = massiv
+
         return allpath[minimal]
 
     # print(len(allpath), allpath)
+
+    # print(len(allpath[min(allpath)]))
+    if type(allpath[min(allpath)][0]) == list:
+        optimize(allpath[min(allpath)][1])
+    else:
+        optimize(allpath[min(allpath)])
 
     pathmas = printmas()
     return pathmas
