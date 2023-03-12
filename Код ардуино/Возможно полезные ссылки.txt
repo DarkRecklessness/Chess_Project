@@ -1,0 +1,17 @@
+1. https://reprap.org/wiki/RAMPS_1.4/ru
+2. https://3d-diy.ru/wiki/arduino-moduli/drajver-shagovogo-dvigatelya-a4988/
+3. https://www.hwlibre.com/ru/%d0%bd%d0%b5%d0%bc%d0%b0-17/
+4. https://www.brainy-bits.com/post/how-to-set-the-home-position-of-a-stepper-at-startup
+5. https://www.brainy-bits.com/post/homing-stepper-motors-using-the-accelstepper-library
+6. https://howtomechatronics.com/tutorials/arduino/how-to-control-stepper-motor-with-a4988-driver-and-arduino/
+7. https://arduino-diy.com/arduino-sovety-dlya-nachinayushchikh-shagovyy-dvigatel-Nema-17
+8. https://arduino.ru/forum/programmirovanie/upravlenie-shagovymi-dvigatelyami-biblioteka-accelstepper
+9. https://роботехника18.рф/%D1%88%D0%B0%D0%B3%D0%BE%D0%B2%D1%8B%D0%B9-%D0%B4%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%B5%D0%BB%D1%8C-%D0%B0%D1%80%D0%B4%D1%83%D0%B8%D0%BD%D0%BE/#5
+Выше описание accelStepper на русском (корявое описание)
+10. https://oarduino.ru/voprosi-i-otveti/shagovyj-dvigatel-arduino-arduino-upravlenie-podklyuchenie-stepperov-programmnyj-kod-s-razborom#opredelenie-konfiguratsii-motorov
+11. https://osoyoo.com/2017/04/07/arduino-uno-cnc-shield-v3-0-a4988/
+Выше 11 пункт для CNC.
+12. https://hackaday.io/project/183279-accelstepper-the-missing-manual/details
+Выше полноценное описание на английском библиотеки accelStepper
+13. https://hackaday.io/project/183713/instructions
+Выше полезная ссылка по управлению шаговиком (тоже на английском)
