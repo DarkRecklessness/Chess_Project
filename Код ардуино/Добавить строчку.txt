@@ -1,0 +1,4 @@
+if (!incomingString.startsWith("[")) { // если не массив чисел
+  Serial.println("Произошла ошибка записи или чтения Serial порта");
+  return;
+} 
